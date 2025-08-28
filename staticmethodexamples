@@ -1,0 +1,20 @@
+
+public class Main {
+    public static int methodOne(){
+        int localVar = 10;
+        localVar *= 2;
+        return localVar;
+    }
+    public static int methodTwo(){
+        int localVar = 20;
+        localVar += 5;
+        return localVar;
+    }
+    public static void main(String[] args) {
+       int varOne = methodOne();
+       int varTwo = methodTwo();
+
+       System.out.println(varOne + " and " + varTwo);
+
+    }
+}
