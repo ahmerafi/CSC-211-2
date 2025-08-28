@@ -1,0 +1,62 @@
+import java.util.*;
+
+class Main {
+    static boolean retry = true;
+    static Scanner scnr = new Scanner(System.in);
+    static int guesses = 5;
+    static Random rand = new Random();
+    static void retryMethod() {
+            boolean pick = true;
+           	while (pick == true) {
+           	    System.out.println("Would you like to try again? Type Y/N in order to pick your choice.");
+            	String reply = scnr.nextLine();
+            	if (reply.equals("Y")) {
+            		System.out.println("Game is restarting");
+            		guesses = 5;
+                    pick = false;
+            	}
+            	else if (reply.equals("N")) {
+            		retry = false;
+            		System.out.println("Game has concluded");
+                    pick = false;
+            	}
+                else {
+                	System.out.println("Invalid response, please try again");
+                }
+            }
+            
+        }
+    public static void main(String[] args) {
+
+        while (retry == true) {
+            int guesses = 5;
+            boolean correct = false;
+            Random rand = new Random();
+            int correctNumber = rand.nextInt(10) + 1;
+            System.out.println("Guess the correct number from 1 to 10");
+            while (guesses > 0) {
+               int guess = scnr.nextInt();
+               if (guess > correctNumber) {
+                	System.out.println("The number you guessed is too high.");
+               }
+               else if (guess < correctNumber) {
+                	System.out.println("The number you guessed is too low.");
+               }
+               else {
+                	System.out.println("You got the number correct!");
+                	correct = true;
+                    retryMethod();
+               }
+               if (correct != true) {
+                 guesses -= 1;
+                 System.out.println("You have " + guesses + " guesses left.");  
+                 if (guesses == 0) {
+                     System.out.println("The correct number was: " + correctNumber);
+                     retryMethod();
+                 }
+               }
+               
+            }
+        }
+    }
+}
