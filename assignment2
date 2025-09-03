@@ -1,0 +1,23 @@
+import java.util.*;
+
+public class Bank {
+    static ArrayList<Double> listInteractions = new ArrayList<Double>();
+    static double amount = 0;
+    static void deposit(double num) {
+        amount += num;
+        listInteractions.add(num);
+    }
+    static void withdraw(double num) {
+        amount -= num;
+        listInteractions.add(-num);
+    }
+    static void listInteraction() {
+        System.out.println(listInteractions);
+    }
+    public static void main(String[] args) {
+        amount = 50000;
+        Bank.deposit(25000);
+        Bank.withdraw(1500);
+        listInteraction();
+    }
+}
