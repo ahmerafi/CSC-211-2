@@ -18,8 +18,13 @@ public class Main {
             listInteractions.add(num);
         }
         void withdraw(double num) {
-            amount -= num;
-            listInteractions.add(-num);
+            if (num > amount) {
+                System.out.println("You are withdrawing too much money.");
+            }
+            else {
+                amount -= num;
+                listInteractions.add(-num);
+            }
         }
         void listInteraction() {
             System.out.println(listInteractions);
@@ -40,6 +45,9 @@ public class Main {
         account1.printString();
         account1.withdraw(1000);
         account1.withdraw(10000);
+        account1.listInteraction();
+        account1.printString();
+        account1.withdraw(30000);
         account1.listInteraction();
         account1.printString();
     }
