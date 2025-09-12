@@ -1,23 +1,46 @@
 import java.util.*;
 
-public class Bank {
-    static ArrayList<Double> listInteractions = new ArrayList<Double>();
-    static double amount = 0;
-    static void deposit(double num) {
-        amount += num;
-        listInteractions.add(num);
+public class Main {
+
+    public static class Bank {
+        ArrayList<Double> listInteractions = new ArrayList<Double>();
+        double amount = 0;
+
+        public Bank() {
+            this.amount = 0;
+        }
+        public Bank(double amount) {
+            this.amount = amount;
+        }
+
+        void deposit(double num) {
+            amount += num;
+            listInteractions.add(num);
+        }
+        void withdraw(double num) {
+            amount -= num;
+            listInteractions.add(-num);
+        }
+        void listInteraction() {
+            System.out.println(listInteractions);
+        }
+        void printString() {
+            System.out.println("Amount: " + amount);
+        }
     }
-    static void withdraw(double num) {
-        amount -= num;
-        listInteractions.add(-num);
-    }
-    static void listInteraction() {
-        System.out.println(listInteractions);
-    }
+
     public static void main(String[] args) {
-        amount = 50000;
-        Bank.deposit(25000);
-        Bank.withdraw(1500);
-        listInteraction();
+        Bank account1 = new Bank(50000);
+        account1.deposit(5000);
+        account1.listInteraction();
+        account1.printString();
+        account1.withdraw(25000.50);
+        account1.deposit(9000);
+        account1.listInteraction();
+        account1.printString();
+        account1.withdraw(1000);
+        account1.withdraw(10000);
+        account1.listInteraction();
+        account1.printString();
     }
 }
