@@ -32,10 +32,10 @@ public class automobile {
 
     void compareTo(automobile secondCar) {
         if (speedTotal <= secondCar.speedTotal) {
-            System.out.println("The " + model + " is moving slower than the " + secondCar.model + " at a " + (secondCar.speedTotal - speedTotal) + " difference.");
+            System.out.println("The " + model + " is moving slower than the " + secondCar.model + " at a " + (secondCar.speedTotal - speedTotal) + " mph difference.");
         }
         else if (speedTotal >= secondCar.speedTotal) {
-            System.out.println("The " + model + " is moving faster than the " + secondCar.model + " at a " + (secondCar.speedTotal - speedTotal) + " difference.");
+            System.out.println("The " + model + " is moving faster than the " + secondCar.model + " at a " + (speedTotal - secondCar.speedTotal) + " mph difference.");
         }
         else {
             System.out.println("The " + model + " and " + secondCar.model + " are moving at the same speed.");
@@ -106,7 +106,7 @@ public class automobile {
     }
 
     static class sportsCar extends automobile {
-        private int Speed = 5;
+        private int Speed = 8;
         public sportsCar(int year, String model) {
             super(year,model);
         }
@@ -176,10 +176,14 @@ public class automobile {
         car2.printString();
         car2.accelerate();
 
+        car1.compareTo(car2);
+
         sportsCar car3 = new sportsCar(2011, "McLaren");
         car3.honk();
         car3.printString();
         car3.accelerate();
+
+        car1.compareTo(car3);
 
         System.out.println("-----------------------------------------------");
 
