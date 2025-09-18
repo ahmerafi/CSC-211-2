@@ -1,0 +1,194 @@
+import java.util.*;
+
+public class automobile {
+    int year;
+    String model;
+    int speedTotal = 0;
+
+    void honk() {
+        System.out.println("honk");
+    }
+
+    void accelerate(){
+        System.out.println("The automobile accelerates");
+    }
+
+    void reverse(){
+        System.out.println("The automobile reverses");
+    }
+
+    void stop(){
+        System.out.println("The automobile comes to a full stop");
+    }
+
+    public automobile(){
+       this.year = 2000;
+       this.model = "Default";
+    }
+    public automobile(int year, String model) {
+        this.year = year;
+        this.model = model;
+    }
+
+    void compareTo(automobile secondCar) {
+        if (speedTotal <= secondCar.speedTotal) {
+            System.out.println("The " + model + " is moving slower than the " + secondCar.model + " at a " + (secondCar.speedTotal - speedTotal) + " difference.");
+        }
+        else if (speedTotal >= secondCar.speedTotal) {
+            System.out.println("The " + model + " is moving faster than the " + secondCar.model + " at a " + (secondCar.speedTotal - speedTotal) + " difference.");
+        }
+        else {
+            System.out.println("The " + model + " and " + secondCar.model + " are moving at the same speed.");
+        }
+    }
+
+    static class Car extends automobile {
+        private int Speed = 5;
+        public Car(int year, String model) {
+            super(year,model);
+        }
+
+        void printString(){
+            System.out.println("Year: " + year + ", Model: " + model);
+        }
+
+        @Override
+        void accelerate() {
+            speedTotal += Speed;
+            System.out.println("The " + model + "'s engine accelerates and is now at " + speedTotal + " mph!");
+        }
+
+        @Override
+        void reverse() {
+            speedTotal -= Speed;
+            System.out.println("The " + model + "'s engine slows down and is now at " + speedTotal + " mph!");
+        }
+
+        @Override
+        void stop() {
+            speedTotal = 0;
+            System.out.println("The " + model + " comes to a full stop.");
+        }
+    }
+
+    static class oldCar extends automobile {
+        private int Speed = 2;
+        public oldCar(int year, String model) {
+            super(year,model);
+        }
+
+        void printString(){
+            System.out.println("Year: " + year + ", Model: " + model);
+        }
+
+        @Override
+        void accelerate() {
+            speedTotal += Speed;
+            System.out.println("The " + model + "'s old engine accelerates and is now at " + speedTotal + " mph!");
+        }
+
+        @Override
+        void reverse() {
+            speedTotal -= Speed;
+            System.out.println("The " + model + "'s old engine slows down and is now at " + speedTotal + " mph!");
+        }
+
+        @Override
+        void stop() {
+            speedTotal = 0;
+            System.out.println("The old " + model + " comes to a full stop.");
+        }
+
+        @Override
+        void honk() {
+            System.out.println("the horn barely works");
+        }
+    }
+
+    static class sportsCar extends automobile {
+        private int Speed = 5;
+        public sportsCar(int year, String model) {
+            super(year,model);
+        }
+
+        void printString(){
+            System.out.println("Year: " + year + ", Model: " + model);
+        }
+
+        @Override
+        void accelerate() {
+            speedTotal += Speed;
+            System.out.println("The " + model + "'s quality engine accelerates and is now at " + speedTotal + " mph!");
+        }
+
+        @Override
+        void reverse() {
+            speedTotal -= Speed;
+            System.out.println("The " + model + "'s quality engine slows down and is now at " + speedTotal + " mph!");
+        }
+
+        @Override
+        void stop() {
+            speedTotal = 0;
+            System.out.println("The new " + model + " comes to a full stop.");
+        }
+
+        @Override
+        void honk() {
+            System.out.println("HOOONK");
+        }
+    }
+
+    static class Tester {
+        private ArrayList<automobile> carList = new ArrayList<automobile>();
+
+        void insertCar(automobile newCar) {
+            carList.add(newCar);
+        }
+
+        void accelerateCars() {
+            for (int i = 0; i < carList.size(); i++) {
+                carList.get(i).accelerate();
+            }
+        }
+
+        void reverseCars() {
+            for (int i = 0; i < carList.size(); i++) {
+                carList.get(i).reverse();
+            }
+        }
+
+        void stopCars() {
+            for (int i = 0; i < carList.size(); i++) {
+                carList.get(i).stop();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Car car1 = new Car(2005,"Subaru");
+        car1.honk();
+        car1.printString();
+        car1.accelerate();
+
+        oldCar car2 = new oldCar(1989, "Honda");
+        car2.honk();
+        car2.printString();
+        car2.accelerate();
+
+        sportsCar car3 = new sportsCar(2011, "McLaren");
+        car3.honk();
+        car3.printString();
+        car3.accelerate();
+
+        System.out.println("-----------------------------------------------");
+
+        Tester testlist = new Tester();
+        testlist.insertCar(car1);
+        testlist.insertCar(car2);
+        testlist.insertCar(car3);
+        testlist.accelerateCars();
+        testlist.reverseCars();
+        testlist.stopCars();
+    }
+}
