@@ -1,0 +1,51 @@
+import javax.swing.JOptionPane;
+
+/**
+ This program demonstrates the GradedActivity
+ class.
+ */
+
+public class GradeDemo
+{
+    public static void main(String[] args)
+    {
+        String input;        // To hold input
+        double testQuestions;
+        int incorrectAnswers;
+        double minimumPassScore;
+
+        // Create a GradedActivity object.
+        GradedActivity grade = new GradedActivity();
+
+        // Get a test score.
+        input = JOptionPane.showInputDialog("Enter " +
+                "the amount of questions.");
+        testQuestions = Double.parseDouble(input);
+
+        input = JOptionPane.showInputDialog("Enter " +
+                "the amount of incorrect answers.");
+        incorrectAnswers = Integer.parseInt(input);
+
+        input = JOptionPane.showInputDialog("Enter " +
+                "the minimum passing score.");
+        minimumPassScore = Double.parseDouble(input);
+
+        // Store the score in the grade object.
+        grade.setScore(((testQuestions-incorrectAnswers)/testQuestions)*100);
+        grade.setPassgrade(minimumPassScore);
+
+        JOptionPane.showMessageDialog(null,
+                "Each question counts as " +
+                        testQuestions/100 + "% of the test's grade.");
+
+        JOptionPane.showMessageDialog(null,
+                "The exam's total score is: " +
+                        grade.getScore() + "%");
+
+        JOptionPane.showMessageDialog(null,
+                "The exam's result is: " +
+                        grade.getGrade());
+
+        System.exit(0);
+    }
+}
