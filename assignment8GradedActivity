@@ -1,0 +1,50 @@
+/**
+ A class that holds a grade for a graded activity.
+ */
+
+public class GradedActivity
+{
+    private double score;  // Numeric score
+    private double passGrade;
+    /**
+     The setScore method sets the score field.
+     @param s The value to store in score.
+     */
+
+    public void setScore(double s)
+    {
+        score = s;
+    }
+
+    public void setPassgrade(double s) {
+        passGrade = s;
+    }
+
+    /**
+     The getScore method returns the score.
+     @return The value stored in the score field.
+     */
+
+    public double getScore()
+    {
+        return score;
+    }
+
+    /**
+     The getGrade method returns a letter grade
+     determined from the score field.
+     @return The letter grade.
+     */
+
+    public char getGrade()
+    {
+        char letterGrade;
+
+        if (score >= passGrade)
+            letterGrade = 'P';
+        else
+            letterGrade = 'F';
+
+        return letterGrade;
+    }
+}
