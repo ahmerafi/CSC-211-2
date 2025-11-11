@@ -1,0 +1,110 @@
+
+abstract class Animal {
+    private String name;
+    private String breed;
+
+    Animal(String newname, String newbreed) {
+        name = newname;
+        breed = newbreed;
+    }
+
+    String getName() {
+        return this.name;
+    }
+    String getBreed() {
+        return this.breed;
+    }
+    abstract void makeSound();
+
+    abstract void move();
+}
+
+/*-------------------------------------------------------------------------*/
+
+interface Organism {
+    void breathe();
+    void eat();
+}
+
+interface landOrganism {
+    void walk();
+}
+
+interface waterOrganism {
+    void swim();
+}
+
+public class Main {
+    static class Dog extends Animal {
+        Dog(String name, String breed) {
+            super(name, breed);
+        }
+        @Override
+        void makeSound() {
+            System.out.println(this.getName() + " the " + this.getBreed() + " barks");
+        }
+
+        @Override
+        void move() {
+            System.out.println(this.getName() + " the " + this.getBreed() + " walks");
+        }
+    }
+
+    static class dog implements Organism,landOrganism {
+        private String name;
+        dog(String name) {
+            this.name = name;
+        }
+        @Override
+        public void breathe() {
+            System.out.println(this.name + " breathes air");
+        }
+
+        @Override
+        public void eat() {
+            System.out.println(this.name + " eats dog food");
+        }
+
+        @Override
+        public void walk() {
+            System.out.println(this.name + " walks");
+        }
+    }
+
+    static class fish implements Organism, waterOrganism {
+        private String name;
+        fish(String name) {
+            this.name = name;
+        }
+        @Override
+        public void breathe() {
+            System.out.println(this.name + " breathes water");
+        }
+
+        @Override
+        public void eat() {
+            System.out.println(this.name + " eats an insect");
+        }
+
+        @Override
+        public void swim() {
+            System.out.println(this.name + " swims");
+        }
+    }
+
+    public static void main(String[] args) {
+        Dog Dog1 = new Dog("Steve", "Dachshund");
+        Dog1.makeSound();
+        Dog1.move();
+
+        dog Dog2 = new dog("Billy");
+        Dog2.breathe();
+        Dog2.eat();
+        Dog2.walk();
+
+        fish Fish1 = new fish("Nemo");
+        Fish1.breathe();
+        Fish1.eat();
+        Fish1.swim();
+    }
+}
