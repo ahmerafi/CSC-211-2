@@ -1,0 +1,5 @@
+/*
+  1. Generics are a type parameter that allow any type to be inserted into the parameter.
+  2. Recursions are best avoided when a loop can be used in place.
+  3. Throwables should be used in order to catch more surface-level errors in comparison to try/catch being specific cases.
+*/
