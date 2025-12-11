@@ -1,0 +1,51 @@
+import java.awt.*;
+
+public class RecursionAndIterative {
+
+    static int fibonaccirecursive(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        else {
+            return fibonaccirecursive(n - 1) + fibonaccirecursive(n - 2);
+        }
+    }
+
+    static int fibbonaciiterative(int num) {
+        int num0 = 0;
+        int num1 = 1;
+        int num2;
+        for (int i = 0; i < num; i++) {
+            num2 = num0 + num1;
+            num0 = num1;
+            num1 = num2;
+        }
+        return num0;
+    }
+
+    static int binaryconvertrecursive(int n) {
+        if (n > 0) {
+            return (n % 2 + 10 * binaryconvertrecursive(n / 2));
+        }
+        else {
+            return 0;
+        }
+    }
+
+    static String binaryconvertiterative(int n) {
+        String binary = "";
+        while (n != 0) {
+            binary = binary + (n % 2);
+            n = n/2;
+        }
+        binary = String.valueOf(new StringBuilder(binary).reverse());
+        return binary;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(fibbonaciiterative(10));
+        System.out.println(fibonaccirecursive(10));
+        System.out.println(binaryconvertrecursive(20));
+        System.out.println(binaryconvertiterative(20));
+    }
+}
