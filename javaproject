@@ -1,0 +1,287 @@
+import java.util.*;
+
+class CommercePrototype {
+    static Scanner scnr = new Scanner(System.in);
+    public static class User {
+        double discount;
+        String membershipType = "None";
+       /* info about user, such as membership and discount */
+
+        Order orderDetails = new Order();
+       /*intializes order details*/
+        public User() {
+            this.discount = 0;
+            this.membershipType = "None";
+            this.orderDetails = new Order();
+        }
+       /*intializes user*/
+    }
+
+    static class Administrator extends User {
+        String membershipType = "Admin";
+    }
+
+    static class Customer extends User {
+        String membershipType = "Default";
+    }
+
+    static class Order {
+
+        ArrayList<Product> currentOrder = new ArrayList<Product>();
+
+        double returnTotal() {
+            double total = 0;
+            /* loops through currentOrder arraylist and gets the price, then adds it */
+            for (Product item : this.currentOrder) {
+                double price = item.GetPrice()*item.GetQuantity();
+                total += price;
+            }
+            return total;
+        }
+
+        public Order() {
+            this.currentOrder = new ArrayList<Product>();
+        }
+
+        public Order(ArrayList<Product> orderList) {
+            this.currentOrder = orderList;
+        }
+
+        /* initialization for the order class */
+
+        public void addToOrder(Product currentProduct, int quantity) {
+            if (currentOrder.contains(currentProduct.GetName())) {
+                currentProduct.changeQuantity(quantity);
+            }
+            else {
+                this.currentOrder.add(currentProduct);
+                currentProduct.changeQuantity(quantity);
+            }
+        }
+
+        public void removeFromOrder(String currentProduct) {
+            Product chosenProduct = null;
+            /* checks if any product in the order has the same name as the string, and is set to the chosen product */
+            for (Product item : this.currentOrder) {
+                if (item.GetName().equals(currentProduct)) {
+                    chosenProduct = item;
+                }
+            }
+            if (chosenProduct != null) {
+                System.out.println("You have ordered " + chosenProduct.GetQuantity() + " of this product, how many would you like to remove?");
+                /* checks for a number greater than 0, since it'll be set to negative anyway, the quantity cannot be set below 0 */
+                boolean valid = false;
+                int quantity = 0;
+                while (!valid) {
+                    try {
+                        quantity = scnr.nextInt();
+                        valid = true;
+                    }
+                    catch (InputMismatchException e) {
+                        System.out.println("Invalid number, please try again.");
+                        scnr.nextLine();
+                    }
+                }
+                if (quantity < 0) {
+                    System.out.println("You entered in a number less than 0.");
+                }
+                else {
+                    chosenProduct.changeQuantity(-quantity);
+                    System.out.println("Removed " + quantity + " orders of " + chosenProduct.GetName() + ".");
+                }
+            }
+            else {
+                /* if there's no product with the name entered in the search function, then print this statement and return to the search function */
+                System.out.println("You do not have this product in your checkout.");
+            }
+        }
+    }
+
+    static class Product { /* the superclass of all the product classes */
+        /* information about the product initialized here */
+
+        private double Price;
+        private int Quantity;
+        String Name;
+
+        /* methods for the product classes */
+
+        public double GetPrice() {
+            return Price;
+        }
+
+        public int GetQuantity() {
+            return Quantity;
+        }
+
+        public String GetName() {
+            return Name;
+        }
+
+        /* returns info for the List command */
+
+        public void GetInfo() {
+            System.out.println("-----------------------------------------------");
+            System.out.println("Product Name: " + GetName());
+            System.out.println("Product Price: $" + GetPrice());
+            /* The following code gets the classname and formats it so CommercePrototype$ is removed from the string */
+            String productType = this.getClass().getName();
+            int startindex = productType.indexOf("C");
+            int lastindex = productType.indexOf("$");
+            String replaced = productType.substring(startindex, lastindex + 1);
+            System.out.println("Product Type: " + productType.replace(replaced,""));
+            System.out.println("-----------------------------------------------");
+        }
+
+
+        /* initialization for superclass */
+
+        public Product(String Name,double Price) {
+            this.Name = Name;
+            this.Price = Price;
+            this.Quantity = 0;
+        }
+
+        public void changeQuantity(int num) {
+            if (this.Quantity + num <= 0) { /* handles negative integers for removal */
+                this.Quantity = 0;
+            }
+            else {
+                this.Quantity += num;
+            }
+        }
+
+    }
+
+    static class Electronic extends Product {
+        String color;
+        public Electronic(String newName, double newPrice) {
+            super(newName,newPrice);
+        }
+        /* initialization for subclass */
+    }
+
+    static class Clothing extends Product {
+        char size;
+        public Clothing(String newName, double newPrice) {
+            super(newName,newPrice);
+        }
+        /* initialization for subclass */
+    }
+
+    static class Grocery extends Product {
+        double pounds;
+        public Grocery(String newName, double newPrice) {
+            super(newName,newPrice);
+        }
+        /* initialization for subclass */
+    }
+
+    static double tax = .075;
+    static Product searchFunction(Product[] productList, User currentUser) {
+        boolean search = false;
+        Product searchedName = null;
+        while (search == false) {
+            String searchName = scnr.nextLine();
+            /* first checks for the unique commands before checking the product list */
+            if (searchName.equals("CheckOut")) {
+                /* total is calculated here */
+                double checkoutTotal = currentUser.orderDetails.returnTotal();
+                double checkouttotal = (checkoutTotal + (checkoutTotal*tax))/(1 + currentUser.discount);
+                System.out.println("Your total checkout is: $" + checkouttotal);
+            }
+            else if (searchName.equals("List")) {
+                /* calls for the getinfo function from every product listed */
+                for (Product produceName : productList) {
+                    produceName.GetInfo();
+                }
+            }
+            else if (searchName.equals("Remove")) {
+                /* checks if user has product in checkout, else return to the search statement */
+                boolean valid = false;
+                String productName = "";
+                System.out.println("Please enter in a product name that is present in your order.");
+                while (!valid) {
+                    try {
+                        productName = scnr.nextLine();
+                        valid = true;
+                    }
+                    catch (InputMismatchException e) {
+                        System.out.println("Invalid product name, please try again.");
+                        scnr.nextLine();
+                    }
+                }
+                currentUser.orderDetails.removeFromOrder(productName);
+                System.out.println();
+            }
+            else {
+                for (Product produceName : productList) {
+                    if (produceName.GetName().contains(searchName)) { /* checks if pattern is inside of the product's name */
+                        if (searchName.matches(produceName.GetName())) { /* checks if the typed string matches product 1 to 1 */
+                            searchedName = produceName;
+                            search = true;
+                            /* breaks the loop and returns the product */
+                            break;
+                        }
+                    }
+                }
+                /* if not was found, print this statement */
+                if (search == false) {
+                    System.out.println("There appears to be no item with that name, please try again.");
+                }
+            }
+        }
+        return searchedName;
+    }
+
+    public static void main(String[] args) {
+        User currentUser = new Customer();
+
+        Scanner scnr = new Scanner(System.in);
+
+        Electronic product1 = new Electronic("Phone",65);
+        Clothing product2 = new Clothing("Hoodie",35);
+        Grocery product3 = new Grocery("Apple",15);
+        Product[] productList = {product1, product2, product3};
+
+        /* all products are listed here */
+
+        while (true) {
+            System.out.println("Welcome to the ECommerce App, type up 'List' in order to find products available and then enter them in, else just type in CheckOut to confirm your order. You can also enter 'Remove' to remove some items from your checkout.");
+            while (true) {
+                /* main loop for declaring orders */
+                Product currentItem = searchFunction(productList,currentUser);
+                System.out.println("Current Product Selected: " + currentItem.GetName());
+                System.out.println("Item Price: $" + currentItem.GetPrice());
+                System.out.println("How many would you like to order?");
+                boolean valid = false;
+                int itemQuantity = 0;
+                while (!valid) {
+                    try {
+                        itemQuantity = scnr.nextInt();
+                        valid = true;
+                    }
+                    catch (InputMismatchException e) {
+                        System.out.println("Invalid number, please try again.");
+                        scnr.nextLine();
+                    }
+                }
+                /* gets the user's entered quantity, checks if its over 0, else it just breaks the loop without changing anything */
+                if (itemQuantity > 0) {
+                    currentUser.orderDetails.addToOrder(currentItem,itemQuantity);
+                    if (itemQuantity > 1) {
+                        System.out.println(currentItem.GetQuantity() + " " + currentItem.GetName() + "s" + " ordered");
+                    }
+                    else {
+                        System.out.println(currentItem.GetQuantity() + " " + currentItem.GetName() + " ordered");
+                    }
+                }
+                else {
+                    System.out.println("no number over 0 declared, no " + currentItem.GetName() + " ordered");
+                }
+                break;
+            }
+        }
+        /* while function loops through the store functions completely without ever being closed out until done */
+    }
+}
