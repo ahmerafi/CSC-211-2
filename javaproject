@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.*;
 
 class CommercePrototype {
@@ -204,7 +205,9 @@ class CommercePrototype {
                 /* total is calculated here */
                 double checkoutTotal = currentUser.orderDetails.returnTotal();
                 double checkouttotal = (checkoutTotal + (checkoutTotal*tax))/(1 + currentUser.discount);
-                System.out.println("Your total checkout is: $" + checkouttotal);
+                /* decimal format sets it to 2 decimal places */
+                DecimalFormat moneyformat = new DecimalFormat("#.##");
+                System.out.println("Your total checkout is: $" + moneyformat.format(checkouttotal));
             }
             else if (searchName.equals("List")) {
                 /* calls for the getinfo function from every product listed */
