@@ -266,7 +266,7 @@ class CommercePrototype {
         Grocery product3 = new Grocery("Apple",15);
         Product[] productList = {product1, product2, product3};
 
-        /* all products are listed here */
+        /* all products are put into the product table in order to be put on sale*/
 
         while (true) {
             System.out.println("Welcome to the ECommerce App, type up 'List' in order to find products available and then enter them in, else just type in CheckOut to confirm your order. You can also enter 'Remove' to remove some items from your checkout.");
